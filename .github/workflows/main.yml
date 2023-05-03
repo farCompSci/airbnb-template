@@ -15,4 +15,4 @@ jobs:
             username: ${{ secrets.SERVER_USERNAME }}
             password: ${{ secrets.SERVER_PASSWORD }}
             sourceDir: .
-            targetDir: /home/<changeme>/public_html/airbnb
+            targetDir: /home/<changeme>/public_html/fakeAirbnb
