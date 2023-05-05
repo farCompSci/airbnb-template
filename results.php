@@ -41,101 +41,33 @@
     <main>
 
 
-        <div class="album py-5 bg-light">
-            <div class="container">
-                <h1>Some Text</h1>
-                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 
-                    <div class="col">
-                        <div class="card shadow-sm">
-                            <img src="sample.jpg">
+        <div class="container">
 
-                            <div class="card-body">
-                                <h5 class="card-title">Some Text</h5>
-                                <p class="card-text">more text</p>
-                                <p class="card-text align-bottom">
-                                    <i class="bi bi-star-fill"></i>          
-                                </p>
+            <h1>Some Text</h1>
+            <div class="card shadow-sm">
+                <img src="sample.jpg">
 
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                        <button type="button" id="myId" class="btn btn-sm btn-outline-secondary viewListing" >View</button>                    
-                                    </div>
-                                    <small class="text-muted">text</small>
+                <div class="card-body">
+                    <h5 class="card-title">Sample Card</h5>
+                    <p class="card-text">more text</p>
+                    <p class="card-text align-bottom">
+                        <i class="bi bi-star-fill"></i>          
+                    </p>
 
-                                </div>
-                            </div><!-- .card-body-->
-                        </div><!--.card-->
-                    </div><!--.col-->
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                            <button type="button" id="myId" class="btn btn-sm btn-outline-secondary viewListing" >View</button>                    
+                        </div>
+                        <small class="text-muted">text</small>
 
-                    <div class="col">
-                        <div class="card shadow-sm">
-                            <img src="sample.jpg">
+                    </div>
+                </div><!-- .card-body-->
+            </div><!--.card-->
 
-                            <div class="card-body">
-                                <h5 class="card-title">Some Text</h5>
-                                <p class="card-text">more text</p>
-                                <p class="card-text align-bottom">
-                                    <i class="bi bi-star-fill"></i>          
-                                </p>
 
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                        <button type="button" id="myId" class="btn btn-sm btn-outline-secondary viewListing" >View</button>                    
-                                    </div>
-                                    <small class="text-muted">text</small>
+        </div><!-- .container-->
 
-                                </div>
-                            </div><!-- .card-body-->
-                        </div><!--.card-->
-                    </div><!--.col-->
-
-                    <div class="col">
-                        <div class="card shadow-sm">
-                            <img src="sample.jpg">
-
-                            <div class="card-body">
-                                <h5 class="card-title">Some Text</h5>
-                                <p class="card-text">more text</p>
-                                <p class="card-text align-bottom">
-                                    <i class="bi bi-star-fill"></i>          
-                                </p>
-
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                        <button type="button" id="myId" class="btn btn-sm btn-outline-secondary viewListing" >View</button>                    
-                                    </div>
-                                    <small class="text-muted">text</small>
-
-                                </div>
-                            </div><!-- .card-body-->
-                        </div><!--.card-->
-                    </div><!--.col-->
-
-                    <div class="col">
-                        <div class="card shadow-sm">
-                            <img src="sample.jpg">
-
-                            <div class="card-body">
-                                <h5 class="card-title">Some Text</h5>
-                                <p class="card-text">more text</p>
-                                <p class="card-text align-bottom">
-                                    <i class="bi bi-star-fill"></i>          
-                                </p>
-
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                        <button type="button" id="myId" class="btn btn-sm btn-outline-secondary viewListing" >View</button>                    
-                                    </div>
-                                    <small class="text-muted">text</small>
-
-                                </div>
-                            </div><!-- .card-body-->
-                        </div><!--.card-->
-                    </div><!--.col-->
-                </div><!--row-->
-            </div><!-- .container-->
-        </div>
 
     </main>
 
