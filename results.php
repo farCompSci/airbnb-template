@@ -45,25 +45,8 @@
         <div class="container">
 
             <h1>Some Text</h1>
-            <div class="card shadow-sm">
-                <img src="sample.jpg">
 
-                <div class="card-body">
-                    <h5 class="card-title">Sample Card</h5>
-                    <p class="card-text">more text</p>
-                    <p class="card-text align-bottom">
-                        <i class="bi bi-star-fill"></i>          
-                    </p>
 
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div class="btn-group">
-                            <button type="button" id="myId" class="btn btn-sm btn-outline-secondary viewListing" >View</button>                    
-                        </div>
-                        <small class="text-muted">text</small>
-
-                    </div>
-                </div><!-- .card-body-->
-            </div><!--.card-->
 
 
         </div><!-- .container-->
