@@ -64,7 +64,7 @@
     <footer class="text-muted py-5">
     <div class="container">
 
-        <p class="mb-1">CS 293, Summer 2023</p>
+        <p class="mb-1">CS 293, Spring 2024</p>
         <p class="mb-1">Lewis & Clark College</p>
     </div><!-- .container-->
     </footer>
