@@ -40,23 +40,89 @@
 
     <main>
 
+    <?php 
+    //Setup
+    include('src/functions.php');
+    $db = dbConnect();
+    $neighborhood = getNeighborhoods($db);
+    $roomType = getRoomTypes($db);
+    $numberGuests = getNumberOfGuests($db);
+    ?>
+
     <div class="album py-5 bg-light">
         <div class="container">
-        <h1>a title:</h1>
+        <h1>Search for Rentals in the Portland Area</h1>
 
-            <div class="row g-3 align-items-center">
-                <div class="col-auto">
-                    <label for="neighborhood" class="col-form-label">sample form element label</label>
+            <form action="results.php" method="GET">
+
+                <div class="row g-3 align-items-center">
+                    <div class="col-auto">
+                    <label for="neighborhood" class="col-form-label">Neighborhood</label>
+                    </div>
+
+                    <div class="col-auto">
+                        <select name="neighborhoodId">
+                            <option selected>Select One</option>
+                            <?php 
+                                foreach($neighborhood as $row){ // the first is the array and the row is the element that is the subscripted
+                                    $id = $row["id"];
+                                    $name = $row["neighborhood"];
+                                    echo "<option value=\"$id\">$name</option>";
+                                }
+                            ?>
+                        </select>
+                    </div>
+
+                </div><!-- row -->
+
+                <div class="row g-3 align-items-center">
+                    <div class="col-auto">
+                        <label for="RoomType" class="col-form-label">Room Type</label>
+                    </div>
+
+                    <div class="col-auto">
+                    <select name="roomType">
+                            <?php 
+                                // var_dump($roomType);
+                                foreach($roomType as $row){ // the first is the array and the row is the element that is the subscripted
+                                    $type = $row["type"];
+                                    $roomId = $row["id"];
+                                    echo "<option value=\"$roomId\">$type</option>";
+                                }
+                            ?>
+                        </select>
+                    </div>
+
                 </div>
 
-                <div class="col-auto">
-                        form element here
+                <div class="row g-3 align-items-center">
+                    <div class="col-auto">
+                        <label for="NumberOfGuests" class="col-form-label">Number of Guests</label>
+                    </div>
+
+                    <div class="col-auto">
+                            <select name="noGuests">
+                            <?php 
+                                foreach($numberGuests as $row){ // the first is the array and the row is the element that is the subscripted
+                                    $number = $row["accommodates"];
+                                    echo "<option value=\"$number\">$number</option>";
+                                }
+                            ?>
+                            </select>
+                    </div>
+
+                </div><!-- row -->
+
+                <div class="row g-3 align-items-center">
+                    <div class="col-auto">
+                        <input type="submit" id="submit" class="btn btn-primary" value="Submit">
+                    </div>
                 </div>
-
-            </div><!-- row -->
-
+            
+            </form>
 
         </div><!-- .container-->
+
     </div><!-- album-->
 
     </main>

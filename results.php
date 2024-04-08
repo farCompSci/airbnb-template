@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
+    <head>
+        <meta charset="utf-8">
 
 
-    <title>Fake Airbnb Results</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <!-- Bootstrap core CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <link href="css/style.css" rel="stylesheet">
-    <link rel="icon" href="images/house-heart-fill.svg">
-    <link rel="mask-icon" href="images/house-heart-fill.svg" color="#000000">   
-  </head>
+        <title>Fake Airbnb Results</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+        <!-- Bootstrap core CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+        <link href="css/style.css" rel="stylesheet">
+        <link rel="icon" href="images/house-heart-fill.svg">
+        <link rel="mask-icon" href="images/house-heart-fill.svg" color="#000000">   
+    </head>
   <body>
     
     <header>
@@ -36,46 +36,118 @@
             </button>
             </div>
         </div>
+        
     </header>
 
     <main>
 
-
+    <?php 
+        include('src/functions.php');
+        $db = dbConnect();
+        $neighborhood = getNeighborhoods($db);
+        $roomType = getRoomTypes($db);
+        $numberGuests = getNumberOfGuests($db);
+    ?>
 
         <div class="container">
 
-            <h1>Some Text</h1>
+            <?php
+                $neighborhoodId = $_GET['neighborhoodId'];
+                $roomType = $_GET['roomType'];
+                $accomodates = $_GET['noGuests'];
 
 
+            $h1_count = getResultCount($db,$neighborhoodId,$roomType[0],$accomodates); 
+            $h1_display = $h1_count[0]["count(*)"]; // This contains the count of results, for reference
+            if ($h1_display == 0){
+                echo "<h1>Results (0)</h1>";
+            }
+            else{
+                echo "<h1>Results ($h1_display)</h1>";
+            }
+            // Global Neighborhood Name Location
+            $neighborhoodName = "";
+
+            // Getting and Setting the Neighborhood Name
+            if (isset($_GET['neighborhoodId']) && $_GET['neighborhoodId']!="Select One"){
+                $response = getNeighborhoodsById($db,$neighborhoodId);
+                $name = $response[0]["neighborhood"];
+                echo "<p><span><strong>Neighborhood</strong></span>: $name</p>";
+                $neighborhoodName = $name;
+            }
+
+            // Global roomType Name Location
+            $pickedRoomType = "";
+
+            // Getting and setting the Room Type ID
+            if (isset($_GET['roomType']) && $_GET['roomType']!="Select One"){
+                $new_response = getRoomTypeById($db,$roomType[0]);
+                $name = $new_response[0]['type'];
+                echo "<p><span><strong>Room Type</strong></span>: $name</p>";
+                $pickedRoomType = $name;
+            }
+
+            // Global Value for Number of Guests
+            $accomodates = ""; 
+
+            // Getting the number of guests
+            if (isset($_GET['noGuests'])){
+                $accom = $_GET['noGuests'];
+                echo "<p><span><strong>Accommodates</strong></span>: $accom</p>";
+
+            }
+
+            $card_info = createCards($db,$neighborhoodId,$roomType[0],$accom);
+
+            ?>
+            
 
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 
-<div class="col">
-    <div class="card shadow-sm">
-        <img src="https://a0.muscache.com/pictures/miso/Hosting-595680673819411804/original/a6e6fda5-2935-4e2e-ba34-2fc50bba5cf3.jpeg">
+                            <?php
+                                for ($i=0;$i<$h1_display;$i++){
+                                    echo "<div class=col>";
+                                    echo "<div class=\"card shadow-sm\">";
 
-        <div class="card-body">
-            <h5 class="card-title">Kerns</h5>
-            <p class="card-text">1922 Craftsman Compound in Laurelhurst ~ Sleeps 12<br>Entire home/apt</p>
-            <p class="card-text">Accommodates 16</p>
+                                    $imgC = $card_info[$i]['pictureUrl'];
+                                    echo "<img src=\"$imgC\">";
+                                    
+                                    echo "<div class=\"card-body\">";
+                                    $nameN = $card_info[$i]['neighborhood'];
+                                    echo "<h5 class=\"card-title\">$nameN</h5>";
 
-            <p class="card-text align-bottom">
-            <i class="bi bi-star-fill"></i><span class=""> 5.00</span>
-            </p>
+                                    $nameL = $card_info[$i]['name'];
+                                    $typeR = $card_info[$i]['type'];
+                                    echo "<p class=\"card-text\">$nameL<br>$typeR</p>";
 
-            <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                    <button type="button" id="3301" class="btn btn-sm btn-outline-secondary viewListing" data-bs-toggle="modal" data-bs-target="#fakeAirbnbnModal">View</button>
-    
-                </div>
-                <small class="text-muted">$960.00</small>
+                                    $accomodatesN = $card_info[$i]["accommodates"];
+                                    echo "<p class=\"card-text\">Accommodates $accomodatesN</p>";
 
-            </div>
-        </div>
-    </div><!--.card-->
-</div><!--.col-->
+                                    $rating = $card_info[$i]["rating"];
 
+                                    $rating_par1= "<p class=\"card-text align-bottom\">";
+                                    $rating_par2= "<i class=\"bi bi-star-fill\"></i><span class=\"\"> $rating </span>";
+                                    $rating_par3= "</p>";
+                                    echo $rating_par1.$rating_par2.$rating_par3;
 
+                                    $priceL = $card_info[$i]["price"];
+                                    $idL = $card_info[$i]["id"];
+                                    echo "<div class=\"d-flex justify-content-between align-items-center\">
+                                        <div class=\"btn-group\">
+                                            <button type=\"button\" id=\"$idL\" class=\"btn btn-sm btn-outline-secondary viewListing\" data-bs-toggle=\"modal\" data-bs-target=\"#fakeAirbnbnModal\">View</button>
+                                        </div>
+                                        
+                                        <small class=\"text-muted\">\$$priceL</small>
+
+                                    </div>
+                                    </div>
+                                    </div>
+                                    </div>";
+                                }
+                                
+                            ?>
+
+            
 
 
 
