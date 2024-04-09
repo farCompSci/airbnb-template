@@ -59,10 +59,8 @@
                     <div class="col-auto">
                     <label for="neighborhood" class="col-form-label">Neighborhood</label>
                     </div>
-
                     <div class="col-auto">
                         <select name="neighborhoodId">
-                            <option selected>Select One</option>
                             <?php 
                                 foreach($neighborhood as $row){ // the first is the array and the row is the element that is the subscripted
                                     $id = $row["id"];

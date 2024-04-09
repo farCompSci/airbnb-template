@@ -96,7 +96,8 @@ function createCards($db, $neighborhoodId, $roomTypeId, $accommodates){
     from listings 
     inner join neighborhoods on listings.neighborhoodId=neighborhoods.id 
     inner join roomTypes on listings.roomTypeId = roomTypes.id 
-    where roomTypes.id = $roomTypeId and listings.accommodates= $accommodates and neighborhoods.id= $neighborhoodId
+    inner join hosts on hosts.id = listings.hostId 
+    where listings.roomTypeId=$roomTypeId and accommodates=$accommodates and neighborhoodId=$neighborhoodId
     limit 20;");
     $stmt->execute();
     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -104,6 +105,16 @@ function createCards($db, $neighborhoodId, $roomTypeId, $accommodates){
     return $rows;
 }
 
+// Get Amenities
+function getAmenities($db,$accommodates,$extId){
+    $stmt = $db->prepare("select amenity from amenities
+    join listingAmenities on amenities.id=listingAmenities.amenityID
+    join listings on listings.id=listingAmenities.listingID
+    where listings.accommodates=$accommodates and extId=$extId;");
+    $stmt->execute();
+    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $rows;
+}
 
 define("SERVER", "localhost");
 define("PORT", "3306");

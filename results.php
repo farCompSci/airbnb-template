@@ -57,6 +57,7 @@
                 $accomodates = $_GET['noGuests'];
 
 
+
             $h1_count = getResultCount($db,$neighborhoodId,$roomType[0],$accomodates); 
             $h1_display = $h1_count[0]["count(*)"]; // This contains the count of results, for reference
             if ($h1_display == 0){
@@ -65,11 +66,12 @@
             else{
                 echo "<h1>Results ($h1_display)</h1>";
             }
+
             // Global Neighborhood Name Location
             $neighborhoodName = "";
 
             // Getting and Setting the Neighborhood Name
-            if (isset($_GET['neighborhoodId']) && $_GET['neighborhoodId']!="Select One"){
+            if (isset($_GET['neighborhoodId'])){
                 $response = getNeighborhoodsById($db,$neighborhoodId);
                 $name = $response[0]["neighborhood"];
                 echo "<p><span><strong>Neighborhood</strong></span>: $name</p>";
@@ -80,7 +82,7 @@
             $pickedRoomType = "";
 
             // Getting and setting the Room Type ID
-            if (isset($_GET['roomType']) && $_GET['roomType']!="Select One"){
+            if (isset($_GET['roomType'])){
                 $new_response = getRoomTypeById($db,$roomType[0]);
                 $name = $new_response[0]['type'];
                 echo "<p><span><strong>Room Type</strong></span>: $name</p>";
@@ -134,7 +136,7 @@
                                     $idL = $card_info[$i]["id"];
                                     echo "<div class=\"d-flex justify-content-between align-items-center\">
                                         <div class=\"btn-group\">
-                                            <button type=\"button\" id=\"$idL\" class=\"btn btn-sm btn-outline-secondary viewListing\" data-bs-toggle=\"modal\" data-bs-target=\"#fakeAirbnbnModal\">View</button>
+                                            <button type=\"button\" id=\"$idL\" class=\"btn btn-sm btn-outline-secondary viewListing\" data-bs-toggle=\"modal\" data-bs-target=\"#fakeAirbnbnModal$i\">View</button>
                                         </div>
                                         
                                         <small class=\"text-muted\">\$$priceL</small>
@@ -144,6 +146,15 @@
                                     </div>
                                     </div>";
                                 }
+                                // var_dump(getAmenities($db,$roomType[0],$card_info[0]['name'],$accom));
+                                // $tempLId = $card_info;
+                            
+                                // $amen÷ump($amenitiesQry);
+
+                                // $tempAmenities = getAmenities($db,$tempLId);
+                                // var_dump($card_info[0]);
+                                // $extId=$card_info[0]['extId'];
+                                // var_dump(getAmenities($db,$accom,$extId));
                                 
                             ?>
 
@@ -165,22 +176,65 @@
         </div>
     </footer>
     <!-- modal-->
-    <div class="modal fade modal-lg" id="fakeAirbnbnModal" tabindex="-1" aria-labelledby="fakeAirbnbnModalLabel" aria-modal="true" role="dialog" >
-      <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modal-title">Private Rooftop Flat~ 14 Guests ~ 94 WalkScore</h5>
-                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <?php 
+        for ($j=0;$j<$h1_display;$j++){
+            $tempName = $card_info[$j]['name'];
+            $tempRoomType = $card_info[$j]['type'];
+            $tempImg = $card_info[$j]['pictureUrl'];
+            $tempNeighborhood = $card_info[$j]['neighborhood'];
+            $tempPrice = $card_info[$j]['price'];
+            $tempRating = $card_info[$j]['rating'];
+            $tempHost = $card_info[$j]['hostName'];
+            $tempLId = $card_info[$j]['id'];
+            $tempExtId = $card_info[$j]['extId'];
+            $listAmenities = getAmenities($db,$accom,$tempExtId);
+            $amenitiesString = "";
+
+            foreach ($listAmenities as $item) {
+                $amenitiesString .= $item["amenity"] . ", ";
+            }
+
+            $amenitiesString = rtrim($amenitiesString, ", ");                       
+
+
+            $modal_p1 = "<div class=\"modal fade modal-lg\" id=\"fakeAirbnbnModal$j\" tabindex=\"-1\" aria-labelledby=\"fakeAirbnbnModalLabel\" aria-modal=\"true\" role=\"dialog\" >
+            <div class=\"modal-dialog\">
+                <div class=\"modal-content\">
+                    <div class=\"modal-header\">
+                    <h5 class=\"modal-title\" id=\"modal-title\">$tempName</h5>
+                    <button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"modal\" aria-label=\"Close\"></button>
+                    </div>
+                    <div class=\"modal-body\" id=\"modal-image\">
+                    <img src=\"$tempImg\" class=\"img-fluid\">
+                    </div>
+                    <div class=\"modal-footer\">
+                        <p>$tempNeighborhood</p><p>$tempPrice / night</p><p>Accommodates $accom</p><p><i class=\"bi bi-star-fill\"></i> $tempRating</p><p>Hosted by $tempHost</p><p>Amenities:  $amenitiesString</p><button type=\"button\" class=\"btn btn-secondary\" data-bs-dismiss=\"modal\">Close</button>
+                    </div>
+                    </div>
+                    </div>
+                    </div>";
+
+            echo $modal_p1;
+            $amenitiesString = "";
+        }
+        
+    ?>
+    <!-- <div class="modal fade modal-lg" id="fakeAirbnbnModal" tabindex="-1" aria-labelledby="fakeAirbnbnModalLabel" aria-modal="true" role="dialog" > -->
+      <!-- <div class="modal-dialog"> -->
+            <!-- <div class="modal-content"> -->
+                <!-- <div class="modal-header"> -->
+                    <!-- <h5 class="modal-title" id="modal-title">Private Rooftop Flat~ 14 Guests ~ 94 WalkScore</h5> -->
+                     <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body" id="modal-image">
-                    <img src="https://a0.muscache.com/pictures/miso/Hosting-816145492959772426/original/0dc00636-64de-4101-a65e-0ea83b974d83.jpeg" class="img-fluid">
-                </div>
+                <div class="modal-body" id="modal-image"> -->
+                    <!-- <img src="https://a0.muscache.com/pictures/miso/Hosting-816145492959772426/original/0dc00636-64de-4101-a65e-0ea83b974d83.jpeg" class="img-fluid"> -->
+                <!-- </div>
                 <div class="modal-footer">
                     <p>Hosford-Abernethy</p><p>$731.00 / night</p><p>Accommodates 14</p><p><i class="bi bi-star-fill"></i> 5.00</p><p>Hosted by Bob</p><p>Amenities: Air conditioning, Bathtub, Bed linens, Body soap, Carbon monoxide alarm, Cleaning products, Clothing storage, Coffee, Coffee maker: Keurig coffee machine, Conditioner, Cooking basics, Dedicated workspace, Dishes and silverware, Dishwasher, Dryer, Essentials, Fire extinguisher, First aid kit, Free street parking, Freezer, Hair dryer, Hangers, Heating, Hot water, Hot water kettle, Iron, Kitchen, Laundromat nearby, Long term stays allowed, Luggage dropoff allowed, Microwave, Outdoor dining area, Outdoor furniture, Oven, Pack ’n play/Travel crib, Private entrance, Private patio or balcony, Refrigerator, Room-darkening shades, Self check-in, Shampoo, Shower gel, Smart lock, Smoke alarm, Stove, TV, Toaster, Washer, Wifi, Wine glasses</p><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
+                </div> -->
+            <!-- </div>
         </div>
-    </div>
+    </div> -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
         
