@@ -99,6 +99,10 @@
 
             }
 
+            if ($h1_display == 0){
+                echo "<h1>Sorry, no results - <a href=\"index.php\">Search Again</a></h1>";
+            }
+
             $card_info = createCards($db,$neighborhoodId,$roomType[0],$accom);
 
             ?>

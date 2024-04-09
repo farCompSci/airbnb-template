@@ -4,7 +4,7 @@
 
 function getNeighborhoods($db){
     try {
-        $stmt = $db->prepare("select * from neighborhoods order by neighborhood ;");   
+        $stmt = $db->prepare("select * from neighborhoods order by neighborhood;");   
         $stmt->execute();
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $rows;
@@ -110,7 +110,8 @@ function getAmenities($db,$accommodates,$extId){
     $stmt = $db->prepare("select amenity from amenities
     join listingAmenities on amenities.id=listingAmenities.amenityID
     join listings on listings.id=listingAmenities.listingID
-    where listings.accommodates=$accommodates and extId=$extId;");
+    where listings.accommodates=$accommodates and extId=$extId
+    limit 20;");
     $stmt->execute();
     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $rows;
